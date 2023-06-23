@@ -4,6 +4,7 @@ const { errors } = require('celebrate');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 const router = require('./routes');
 const error = require('./middlewares/error');
 
@@ -14,6 +15,13 @@ const app = express();
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+});
+
+app.use(limiter);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -26,7 +34,7 @@ app.use(errors());
 app.use(error);
 
 mongoose
-  .connect('mongodb://localhost:27017/bitfilmsdb', { useNewUrlParser: true, useUnifiedTopology: true, family: 4 })
+  .connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, family: 4 })
   .then(() => {
     console.log('База данных подключена');
   })

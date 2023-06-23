@@ -88,7 +88,7 @@ const login = (req, res, next) => {
       if (err instanceof Unauthorized) {
         next(err);
       }
-      return next(new BadRequest(err.message));
+      return next(new InternalServerError('Ошибка по умолчанию'));
     });
 };
 
@@ -104,6 +104,9 @@ const updateProfile = (req, res, next) => {
       }
       if (err instanceof DocumentNotFoundError) {
         return next(new NotFound('Пользователь с указанным _id не найден.'));
+      }
+      if (err.code === 11000) {
+        return next(new Conflict('Пользователь с таким email уже существует.'));
       }
       return next(new InternalServerError('Ошибка по умолчанию'));
     });

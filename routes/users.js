@@ -6,6 +6,6 @@ const { updateUserValidation } = require('../utils/validation');
 
 router.get('/', authorization, getUser);
 router.get('/me', authorization, getMe);
-router.patch('/me', updateUserValidation, authorization, updateProfile);
+router.patch('/me', authorization, updateUserValidation, updateProfile);
 
 module.exports = router;
