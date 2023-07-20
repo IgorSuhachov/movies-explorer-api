@@ -40,12 +40,8 @@ const createMovieValidation = celebrate({
     thumbnail: Joi.string().required().regex(regexp),
     owner: Joi.string().optional(),
     movieId: Joi.number().required(),
-    nameRU: Joi.string()
-      .pattern(/^[а-яА-Я\s0-9!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]+$/u)
-      .required(),
-    nameEN: Joi.string()
-      .pattern(/^[a-zA-Z\s0-9!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]+$/)
-      .required(),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
   }),
 });
 
