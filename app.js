@@ -34,7 +34,11 @@ app.use(errors());
 app.use(error);
 
 mongoose
-  .connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, family: 4 })
+  .connect('mongodb://localhost:27017/bitfilmsdb', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    family: 4,
+  })
   .then(() => {
     console.log('База данных подключена');
   })
